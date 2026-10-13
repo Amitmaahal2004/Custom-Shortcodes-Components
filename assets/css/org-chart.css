@@ -1,0 +1,637 @@
+/**
+ * Stylesheet: Dynamic Organization Chart / Hierarchy Tree
+ * Pixel-Perfect & Responsive Design
+ *
+ * @package CustomShortcodesComponents
+ */
+
+:root {
+	--csc-tree-line-color: #059D3A;
+	--csc-card-bg: #ffffff;
+	--csc-card-border: #edf2f7;
+	--csc-card-shadow: 0px 4px 16px 4px #00000008;
+	--csc-card-hover-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+}
+
+.csc-org-tree-wrapper {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.csc-org-tree-wrapper * {
+	box-sizing: border-box;
+}
+
+/* Header & Titles */
+.csc-org-tree-header {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.csc-org-tree-title {
+	font-size: 28px;
+	font-weight: 700;
+	color: #0f172a;
+	margin: 0 0 8px;
+	letter-spacing: -0.02em;
+}
+
+.csc-org-tree-subtitle {
+	font-size: 15px;
+	color: #64748b;
+	margin: 0;
+	line-height: 1.5;
+}
+
+/* Category Filter Tabs */
+.csc-org-tabs {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-bottom: 35px;
+}
+
+.csc-org-tab {
+	background: #f1f5f9;
+	color: #475569;
+	border: 1px solid #e2e8f0;
+	padding: 8px 18px;
+	border-radius: 30px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.25s ease;
+}
+
+.csc-org-tab:hover {
+	background: #e2e8f0;
+	color: #1e293b;
+}
+
+.csc-org-tab.is-active {
+	background: var(--csc-tree-line-color, #009639);
+	color: #ffffff;
+	border-color: var(--csc-tree-line-color, #009639);
+	box-shadow: 0 4px 12px rgba(0, 150, 57, 0.25);
+}
+
+/* Canvas & Tree Structure */
+.csc-org-tree-canvas {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+
+/* 1. APEX / CHAIRMAN / TOP LEADER */
+.csc-org-apex-container {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	z-index: 5;
+	width: 100%;
+}
+
+.csc-org-apex-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 90vw;
+	text-align: center;
+}
+
+.csc-org-apex-badge-wrapper {
+	min-width: 343px;
+	width: 100%;
+	box-shadow: 0px 4px 16px 4px #00000008;
+	border-radius: 16px;
+	overflow: hidden;
+}
+
+.csc-org-apex-portrait {
+	position: relative;
+	margin-bottom: -6px;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+.csc-org-apex-portrait img {
+	max-width: 269px;
+	max-height: 286px;
+	width: auto;
+	height: auto;
+	object-fit: cover;
+	display: block;
+}
+
+.csc-org-apex-badge {
+	min-width: 343px;
+	width: 100%;
+	border-radius: 16px 16px 0px 0px;
+	background: var(--csc-tree-line-color, #009639);
+	color: #ffffff;
+	padding: 12px 20px;
+	width: 100%;
+	position: relative;
+	z-index: 3;
+}
+
+.csc-org-apex-name {
+	display: block;
+	font-family: "Roboto", sans-serif;
+	color: #ffffff;
+	font-weight: 500;
+	font-size: 18px;
+}
+
+.csc-org-apex-cadre {
+	font-size: 14px;
+	font-weight: 500;
+	opacity: 0.92;
+	margin-left: 4px;
+}
+
+.csc-org-apex-designation-box {
+	background: #ffffff;
+	border-top: none;
+	border-bottom-left-radius: 16px;
+	border-bottom-right-radius: 16px;
+	padding: 20px;
+	width: 100%;
+	font-size: 16px;
+	font-weight: 400;
+	color: #040707;
+	position: relative;
+	z-index: 3;
+}
+
+/* 2. CONNECTING STEM & BRANCH LINES (DESKTOP) */
+.csc-org-connector-container {
+	width: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	z-index: 1;
+}
+
+.csc-org-vertical-stem {
+	width: 2px;
+	height: 86px;
+	background: var(--csc-tree-line-color, #009639);
+	margin: 0 auto;
+}
+
+.csc-org-horizontal-branch {
+	position: absolute;
+	bottom: 0;
+	left: auto !important;
+	height: 2px;
+	right: auto !important;
+	background: var(--csc-tree-line-color, #009639);
+}
+
+/* 3. SUBORDINATES / DIRECTORS ROW (DESKTOP) */
+.csc-org-subordinates-scroll-wrap {
+	width: 100%;
+	overflow-x: auto;
+	padding-top: 0;
+	padding-bottom: 15px;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.csc-org-subordinates-scroll-wrap::-webkit-scrollbar {
+	height: 6px;
+}
+
+.csc-org-subordinates-scroll-wrap::-webkit-scrollbar-track {
+	background: #f8fafc;
+	border-radius: 6px;
+}
+
+.csc-org-subordinates-scroll-wrap::-webkit-scrollbar-thumb {
+	background: #cbd5e1;
+	border-radius: 6px;
+}
+
+.csc-org-subordinates-row {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	gap: 29px;
+	min-width: min-content;
+	padding: 0;
+	margin: 0 auto;
+}
+
+.csc-org-subordinate-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 0 0 206px;
+	max-width: 209px;
+	position: relative;
+}
+
+/* Top connector line into each card (DESKTOP) */
+.csc-org-item-connector {
+	width: 2px;
+	height: 40px;
+	background: var(--csc-tree-line-color, #009639);
+	margin: 0 auto;
+	flex-shrink: 0;
+}
+
+/* Individual Member Card */
+.csc-org-member-card {
+	background: var(--csc-card-bg, #ffffff);
+	border-radius: 16px;
+	box-shadow: var(--csc-card-shadow);
+	padding: 30px 25px 25px 25px;
+	width: 100%;
+	text-align: center;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 1;
+}
+
+.csc-org-member-card:hover {
+	transform: translateY(-5px);
+	box-shadow: var(--csc-card-hover-shadow);
+	border-color: #cbd5e1;
+}
+
+/* Avatar Circles */
+.csc-org-avatar-wrap {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 22px;
+	flex-shrink: 0;
+	transition: transform 0.25s ease;
+}
+
+.csc-org-member-card:hover .csc-org-avatar-wrap {
+	transform: scale(1.06);
+}
+
+.csc-org-avatar-svg {
+	width: 24px;
+	height: 24px;
+}
+
+.csc-org-avatar-img {
+	width: 24px;
+	height: auto;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #ffffff;
+}
+
+/* Color Schemes */
+.csc-avatar-blue {
+	background-color: #e0f2fe;
+	color: #0284c7;
+}
+
+.csc-avatar-green {
+	background-color: #dcfce7;
+	color: #16a34a;
+}
+
+.csc-avatar-peach {
+	background-color: #ffedd5;
+	color: #ea580c;
+}
+
+.csc-avatar-purple {
+	background-color: #f3e8ff;
+	color: #9333ea;
+}
+
+.csc-avatar-teal {
+	background-color: #ccfbf1;
+	color: #0d9488;
+}
+
+/* Card Typography */
+.csc-org-card-body {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 1;
+	justify-content: space-between;
+}
+
+.csc-org-member-name {
+	font-family: "Roboto", sans-serif;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 26px;
+	color: #040707;
+	margin: 0 0 15px 0;
+	align-items: center;
+	text-align: center;
+}
+
+.csc-org-card-divider-outer {
+	margin-top: auto;
+	width: 100%;
+}
+
+.csc-org-member-cadre {
+	font-family: "Roboto", sans-serif;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 26px;
+	text-align: center;
+	color: #1c1c1c;
+}
+
+.csc-org-card-divider {
+	width: 111px;
+	height: 2px;
+	margin: 0 auto 15px;
+	background-color: currentColor;
+	opacity:0.1;
+}
+
+
+/* Match divider with avatar color */
+.csc-org-card-divider.csc-avatar-blue,
+.csc-org-card-divider-outer.csc-avatar-blue .csc-org-card-divider {
+	background-color: #0284c7;
+}
+
+.csc-org-card-divider.csc-avatar-green,
+.csc-org-card-divider-outer.csc-avatar-green .csc-org-card-divider {
+	background-color: #16a34a;
+}
+
+.csc-org-card-divider.csc-avatar-peach,
+.csc-org-card-divider-outer.csc-avatar-peach .csc-org-card-divider {
+	background-color: #ea580c;
+}
+
+.csc-org-card-divider.csc-avatar-purple,
+.csc-org-card-divider-outer.csc-avatar-purple .csc-org-card-divider {
+	background-color: #9333ea;
+}
+
+.csc-org-card-divider.csc-avatar-teal,
+.csc-org-card-divider-outer.csc-avatar-teal .csc-org-card-divider {
+	background-color: #0d9488;
+}
+
+.csc-org-member-designation {
+	font-family: "Nunito", sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 27px;
+	color: #040707;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT: TABLET & MOBILE VERTICAL TIMELINE (<= 991px)
+   ========================================================================== */
+
+@media (max-width: 991px) {
+	.csc-org-tree-canvas {
+		width: 100%;
+		max-width: 580px;
+		margin: 0 auto;
+	}
+
+	/* Chairman is centered at the top */
+	.csc-org-apex-container {
+		width: 100%;
+	}
+
+	.csc-org-apex-badge-wrapper {
+		width: 100%;
+		max-width: 343px;
+	}
+
+	/* Connector from Chairman to left timeline */
+	.csc-org-connector-container {
+		width: 100%;
+		height: 48px;
+		position: relative;
+		display: block;
+	}
+
+	/* Vertical stem drops down from Chairman center */
+	.csc-org-vertical-stem {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		width: 2px;
+		height: 24px;
+		margin: 0;
+		transform: translateX(-50%);
+		background: var(--csc-tree-line-color, #009639);
+	}
+
+	/* Horizontal connector runs left from center stem to timeline spine (left: 20px) */
+	.csc-org-horizontal-branch {
+		display: block !important;
+		position: absolute !important;
+		top: 24px !important;
+		bottom: auto !important;
+		left: 20px !important;
+		width: calc(50% - 20px + 1px) !important;
+		height: 2px !important;
+		right: auto !important;
+		background: var(--csc-tree-line-color, #009639);
+	}
+
+	/* Subordinates wrapper becomes vertical column with no horizontal scroll */
+	.csc-org-subordinates-scroll-wrap {
+		width: 100%;
+		overflow: visible;
+		padding: 0;
+		margin: 0;
+	}
+
+	/* Subordinates list stacked vertically with spine on the left */
+	.csc-org-subordinates-row {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 24px;
+		min-width: 0;
+		width: 100%;
+		padding: 0 0 0 44px;
+		position: relative;
+		margin: 0;
+	}
+
+	/* Top vertical lead-in segment from horizontal branch to first card */
+	.csc-org-subordinates-row::after {
+		content: '';
+		position: absolute;
+		left: 20px;
+		top: -24px;
+		height: 24px;
+		width: 2px;
+		background: var(--csc-tree-line-color, #009639);
+	}
+
+	/* Subordinate items stacked vertically */
+	.csc-org-subordinate-item {
+		flex: 1 1 auto;
+		max-width: 100%;
+		width: 100%;
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	/* Continuous vertical green line on the left side */
+	.csc-org-subordinate-item::before {
+		content: '';
+		position: absolute;
+		left: -24px;
+		top: -12px;
+		bottom: -12px;
+		width: 2px;
+		background: var(--csc-tree-line-color, #009639);
+	}
+
+	/* First item connects to top lead-in */
+	.csc-org-subordinate-item:first-child::before,
+	.csc-org-subordinate-item.csc-is-first-visible::before {
+		top: 0;
+	}
+
+	/* Last item terminates at its horizontal connector */
+	.csc-org-subordinate-item:last-child::before,
+	.csc-org-subordinate-item.csc-is-last-visible::before {
+		bottom: 50%;
+	}
+
+	/* Single item edge case */
+	.csc-org-subordinate-item:first-child:last-child::before {
+		top: 0;
+		bottom: 50%;
+	}
+
+	/* Horizontal connector from vertical left line into each card */
+	.csc-org-item-connector {
+		position: absolute;
+		left: -24px;
+		top: 50%;
+		width: 24px;
+		height: 2px;
+		margin: 0;
+		transform: translateY(-50%);
+		background: var(--csc-tree-line-color, #009639);
+	}
+
+	/* Card styling on tablet / mobile */
+	.csc-org-member-card {
+		width: 100%;
+		padding: 24px 20px;
+	}
+}
+
+@media (max-width: 768px) {
+	.csc-org-apex-portrait img {
+		max-width: 200px;
+		max-height: 200px;
+	}
+
+	.csc-org-connector-container {
+		display: none;
+	}
+
+	.csc-org-subordinate-item:first-child::before,
+	.csc-org-subordinate-item.csc-is-first-visible::before {
+		display: none;
+	}
+
+	.csc-org-subordinate-item::before {
+		display: none;
+	}
+
+	.csc-org-item-connector {
+		display: none;
+	}
+
+	.csc-org-subordinates-row {
+		padding-left: 0px;
+		gap: 20px;
+		margin-top: 20px;
+	}
+
+	.csc-org-subordinates-row::after {
+		display: none;
+	}
+
+	.csc-org-member-name {
+		margin: 0 0px 10px 0px;
+	}
+
+
+
+}
+
+
+@media (max-width: 480px) {
+	.csc-org-tree-title {
+		font-size: 24px;
+	}
+
+	.csc-org-apex-badge {
+		min-width: 300px;
+		width: 100%;
+	}
+
+
+	.csc-org-tree-canvas {
+		padding: 0 8px;
+	}
+
+
+	.csc-org-vertical-stem {
+		height: 20px;
+	}
+
+	.csc-org-horizontal-branch {
+		top: 20px !important;
+		left: 12px !important;
+		width: calc(50% - 12px + 1px) !important;
+	}
+
+
+
+	.csc-org-subordinates-row::after {
+		left: 12px;
+		top: -20px;
+		height: 20px;
+	}
+
+	.csc-org-subordinate-item:last-child::before,
+	.csc-org-subordinate-item.csc-is-last-visible::before {
+		bottom: 50%;
+	}
+
+	.csc-org-member-card {
+		padding: 20px 16px;
+	}
+}

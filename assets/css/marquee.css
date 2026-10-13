@@ -1,0 +1,170 @@
+/**
+ * Custom Shortcodes & Components - Marquee Slider
+ * Pure CSS continuous seamless marquee animation.
+ * Scoped exclusively to .csc-marquee classes.
+ */
+
+.csc-marquee {
+	--csc-marquee-duration: 30s;
+	--csc-marquee-gap: 40px;
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	user-select: none;
+	-webkit-user-select: none;
+	padding: 8px 0 !important;
+}
+
+.csc-marquee__viewport {
+	overflow: hidden;
+	width: 100%;
+	display: flex;
+	position: relative;
+	mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+	-webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.csc-marquee__track {
+	display: flex;
+	width: max-content;
+	gap: var(--csc-marquee-gap);
+	align-items: center;
+	contain: layout paint;
+}
+
+.csc-marquee__group {
+	display: flex;
+	gap: var(--csc-marquee-gap);
+	align-items: center;
+	flex-shrink: 0;
+	min-width: 100%;
+	will-change: transform;
+}
+
+/* Continuous Linear Animations */
+@keyframes cscMarqueeScrollLeft {
+	0% {
+		transform: translateX(0);
+	}
+
+	100% {
+		transform: translateX(calc(-100% - var(--csc-marquee-gap)));
+	}
+}
+
+.csc-marquee--direction-left .csc-marquee__group {
+	animation: cscMarqueeScrollLeft var(--csc-marquee-duration) linear infinite;
+}
+
+.csc-marquee--direction-right .csc-marquee__group {
+	animation: cscMarqueeScrollLeft var(--csc-marquee-duration) linear infinite reverse;
+}
+
+/* Pause on Hover Modifier */
+.csc-marquee--pause-hover:hover .csc-marquee__group {
+	animation-play-state: paused;
+}
+
+/* Marquee Item Styles */
+.csc-marquee__item {
+	display: inline-flex;
+	align-items: center;
+	flex-shrink: 0;
+	box-sizing: border-box;
+}
+
+.csc-marquee__item-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	padding: 0px 5px;
+	text-decoration: none;
+	color: white !important;
+	border-radius: 6px;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	white-space: nowrap;
+}
+
+.csc-marquee__item-link:hover,
+.csc-marquee__item-link:focus {
+	opacity: 0.85;
+	transform: translateY(-1px);
+}
+
+.csc-marquee__item-media {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	max-height: 52px;
+}
+
+.csc-marquee__item-image {
+	display: block;
+	max-height: 44px;
+	width: auto;
+	max-width: 140px;
+	object-fit: contain;
+	height: auto;
+}
+
+.csc-marquee__item-title {
+	font-family: "Nunito";
+	font-weight: 700;
+	font-size: 18px;
+	color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.csc-marquee {
+		padding: 8px 0;
+	}
+
+	.csc-marquee__item-link {
+		gap: 10px;
+		padding: 6px 12px;
+	}
+
+	.csc-marquee__item-media {
+		max-height: 38px;
+	}
+
+	.csc-marquee__item-image {
+		max-height: 34px;
+		max-width: 100px;
+	}
+
+	.csc-marquee__item-title {
+		font-size: 0.95rem;
+	}
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+	.csc-marquee__viewport {
+		mask-image: none;
+		-webkit-mask-image: none;
+	}
+
+	.csc-marquee__track {
+		width: 100%;
+		overflow-x: auto;
+		flex-wrap: wrap;
+		gap: 16px;
+	}
+
+	.csc-marquee__group {
+		animation: none !important;
+		flex-shrink: 1;
+		min-width: auto;
+		flex-wrap: wrap;
+		gap: 16px;
+	}
+
+	.csc-marquee__group[aria-hidden="true"] {
+		display: none !important;
+	}
+}

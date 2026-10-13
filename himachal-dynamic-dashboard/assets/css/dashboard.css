@@ -1,0 +1,533 @@
+/**
+ * Himachal Dynamic Dashboard Stylesheet
+ * Pixel-perfect replica of reference design
+ *
+ * @package HimachalDynamicDashboard
+ */
+
+/* ==========================================================================
+   1. ROOT WRAPPER & RESET
+   ========================================================================== */
+.hp-dashboard-wrapper {
+    width: 100%;
+    max-width: 1380px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: #1e293b;
+    line-height: 1.5;
+}
+
+.hp-dashboard-wrapper *,
+.hp-dashboard-wrapper *::before,
+.hp-dashboard-wrapper *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   2. TWO-COLUMN GRID LAYOUT
+   ========================================================================== */
+.hp-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(360px, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+/* ==========================================================================
+   3. DASHBOARD CARDS BASE
+   ========================================================================== */
+.hp-dashboard-card {
+    background: #ffffff;
+    border: 1px solid #edf2f7;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+    padding: 24px;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.hp-dashboard-card:hover {
+    box-shadow: 0 8px 25px -4px rgba(15, 23, 42, 0.08);
+}
+
+/* Right sidebar stacking */
+.hp-sidebar-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Card Header */
+.hp-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 4px;
+}
+
+.hp-card-title {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.2px;
+}
+
+.hp-view-all-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0b3b60;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.hp-view-all-link:hover {
+    color: #1a56db;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   4. LEFT COLUMN: MAP CARD & TABS
+   ========================================================================== */
+.hp-map-card {
+    position: relative;
+    padding: 24px 24px 20px 24px;
+}
+
+/* Dynamic Tabs */
+.hp-tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.hp-tab-btn {
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.hp-tab-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+.hp-tab-btn.hp-tab-active {
+    background: #0b3b60;
+    border-color: #0b3b60;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(11, 59, 96, 0.25);
+}
+
+/* Map Viewport */
+.hp-map-viewport {
+    position: relative;
+    width: 100%;
+    overflow: visible;
+}
+
+/* Scalable SVG Map */
+.hp-svg-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
+
+/* District polygon styles */
+.hp-district-group {
+    transition: transform 0.2s ease, filter 0.25s ease;
+}
+
+.hp-district-photo {
+    transition: filter 0.25s ease;
+    pointer-events: none;
+    opacity: 0.5px;
+}
+
+.hp-district-boundary {
+    pointer-events: none;
+}
+
+.hp-district-group:hover .hp-district-photo {
+    filter: brightness(1.1) contrast(1.05);
+}
+
+.hp-district-group:hover .hp-district-boundary {
+    stroke: #ffffff;
+    stroke-width: 3.2;
+}
+
+/* Location Dots & Lines */
+.hp-connector-line {
+    transition: stroke 0.2s ease, stroke-width 0.2s ease;
+}
+
+.hp-location-dot {
+    transition: transform 0.2s ease, r 0.2s ease;
+}
+
+.hp-district-group:hover~.hp-connectors-layer .hp-location-dot,
+.hp-location-dot:hover {
+    transform-origin: center;
+    r: 7;
+}
+
+/* Labels */
+.hp-label-item {
+    pointer-events: none;
+    user-select: none;
+}
+
+.hp-label-name {
+    font-family: inherit;
+    letter-spacing: -0.1px;
+}
+
+.hp-label-val {
+    font-family: inherit;
+    letter-spacing: -0.2px;
+}
+
+/* SVG Carousel Navigation Dots */
+.hp-carousel-dots-svg circle {
+    transition: fill 0.25s ease, r 0.25s ease;
+}
+
+.hp-carousel-dots-svg circle:hover {
+    fill: #0b3b60;
+    r: 5.5;
+}
+
+.hp-nav-dot-active {
+    fill: #1b4965 !important;
+}
+
+/* Bottom-Left Total Population Floating Card */
+.hp-total-pop-card {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+    z-index: 10;
+    pointer-events: auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hp-total-pop-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12);
+}
+
+.hp-total-label {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.hp-total-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0b3b60;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+}
+
+/* Map Interactive Hover Tooltip */
+.hp-map-tooltip {
+    position: absolute;
+    background: rgba(15, 23, 42, 0.95);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 99;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -120%);
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    white-space: nowrap;
+}
+
+.hp-tooltip-title {
+    font-weight: 700;
+    color: #93c5fd;
+    margin-bottom: 2px;
+}
+
+.hp-tooltip-val {
+    font-weight: 600;
+    color: #4ade80;
+}
+
+/* ==========================================================================
+   5. RIGHT COLUMN: LATEST ANNOUNCEMENTS
+   ========================================================================== */
+.hp-announcements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hp-announcement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.hp-announcement-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Date Box (Green) */
+.hp-date-box {
+    background: #ebfbee;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 58px;
+    text-align: center;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dcfce7;
+}
+
+.hp-date-day {
+    font-size: 22px;
+    font-weight: 800;
+    color: #107c41;
+    line-height: 1;
+}
+
+.hp-date-my {
+    font-size: 10px;
+    font-weight: 700;
+    color: #166534;
+    text-transform: uppercase;
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+/* Announcement Body & New Badge */
+.hp-ann-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.hp-ann-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.45;
+}
+
+.hp-ann-title-link {
+    color: #1e293b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.hp-ann-title-link:hover {
+    color: #0b3b60;
+    text-decoration: underline;
+}
+
+.hp-badge-new {
+    display: inline-block;
+    background: #107c41;
+    color: #ffffff;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 12px;
+    margin-left: 8px;
+    text-transform: capitalize;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+    box-shadow: 0 2px 6px rgba(16, 124, 65, 0.2);
+}
+
+/* ==========================================================================
+   6. RIGHT COLUMN: IMPORTANT DOWNLOADS
+   ========================================================================== */
+.hp-downloads-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.hp-download-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s ease;
+}
+
+.hp-download-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Red Document Icon */
+.hp-download-doc-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+}
+
+.hp-download-doc-icon svg {
+    display: block;
+}
+
+/* Download Title */
+.hp-download-content {
+    flex: 1;
+}
+
+.hp-download-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #1e293b;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.hp-download-title:hover {
+    color: #0b3b60;
+    text-decoration: underline;
+}
+
+/* Green Download Action Arrow Icon */
+.hp-download-action-btn {
+    flex-shrink: 0;
+    color: #16a34a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 6px;
+    transition: transform 0.2s ease, background 0.2s ease;
+    text-decoration: none;
+}
+
+.hp-download-action-btn:hover {
+    transform: translateY(2px);
+    background: #f0fdf4;
+}
+
+.hp-download-action-btn svg {
+    display: block;
+}
+
+/* Empty message */
+.hp-empty-message {
+    color: #94a3b8;
+    font-size: 13.5px;
+    font-style: italic;
+    margin: 10px 0;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .hp-dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .hp-total-pop-card {
+        bottom: 15px;
+        left: 15px;
+        padding: 10px 16px;
+    }
+
+    .hp-total-value {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hp-dashboard-card {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .hp-tabs-container {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .hp-tab-btn {
+        flex-shrink: 0;
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+
+    .hp-total-pop-card {
+        position: static;
+        margin-top: 15px;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 480px) {
+    .hp-card-header {
+        flex-direction: row;
+    }
+
+    .hp-card-title {
+        font-size: 17px;
+    }
+
+    .hp-announcement-item {
+        gap: 12px;
+    }
+
+    .hp-date-box {
+        min-width: 50px;
+        padding: 6px 8px;
+    }
+
+    .hp-date-day {
+        font-size: 18px;
+    }
+
+    .hp-ann-text,
+    .hp-download-title {
+        font-size: 13.5px;
+    }
+}

@@ -1,0 +1,945 @@
+/**
+ * Custom Shortcodes: Success Stories (Slider, Grid & Single Page)
+ *
+ * @package CustomShortcodesComponents
+ */
+
+/* ==========================================================================
+   Variables & Base Settings
+   ========================================================================== */
+:root {
+	--csc-story-navy: #01356E;
+	--csc-story-blue: #01356E;
+	--csc-story-accent: #01356E;
+	--csc-story-dark: #040707;
+	--csc-story-slate: #040707;
+	--csc-story-muted: #020202;
+	--csc-story-light: #f8fafc;
+	--csc-story-border: #EBEBEB;
+	--csc-story-radius: 14px;
+	--csc-story-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   1. Home Page Video Slider
+   ========================================================================== */
+.csc-story-slider-section {
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0px 0px 0px 0px;
+	box-sizing: border-box;
+}
+
+.csc-story-slider-container {
+	position: relative;
+	z-index: 2;
+}
+
+.csc-story-card {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	background: transparent;
+	border-radius: 16px;
+	overflow: hidden;
+	transition: box-shadow 0.3s ease;
+}
+
+/* Video Column (Left) */
+.csc-story-video-col {
+	position: relative;
+	background: #0f172a;
+	min-height: 480px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: 16px;
+}
+
+.csc-story-video-box {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-height: 380px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #0f172a;
+}
+
+.csc-story-poster-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.csc-story-placeholder-poster {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	min-height: 380px;
+	background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+
+/* Center Play Button Overlay */
+.csc-story-play-trigger {
+	position: absolute;
+	z-index: 5;
+	top: 45%;
+	left: 45%;
+	background: none;
+	border: none !important;
+	padding: 0 !important;
+	cursor: pointer !important;
+	outline: none;
+	transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+button.csc-story-play-trigger {
+	border-radius: 50px !important;
+}
+
+
+button.csc-story-play-trigger:hover {
+	background-color: #ffffff;
+}
+
+button.csc-bar-play-icon:hover {
+	background-color: unset;
+}
+
+
+
+.csc-play-circle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 68px;
+	height: 68px;
+	background: #000000AB;
+	border-radius: 50%;
+	backdrop-filter: blur(4px);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+
+button.csc-bar-fs-icon:hover {
+	background-color: unset;
+}
+
+.csc-play-circle svg {
+	margin-left: 3px;
+	/* visual center for play triangle */
+}
+
+/* Bottom Video Controls Bar Overlay */
+.csc-story-video-bar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 4;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 24px 20px 20px;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+}
+
+.csc-bar-play-icon,
+.csc-bar-fs-icon {
+	background: none;
+	border: none !important;
+	color: #ffffff !important;
+	cursor: pointer !important;
+	padding: 0 !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.9;
+	transition: opacity 0.2s ease, transform 0.2s ease !important;
+}
+
+.csc-bar-play-icon:hover,
+.csc-bar-fs-icon:hover {
+	opacity: 1;
+
+}
+
+.csc-bar-timeline {
+	flex: 1;
+	height: 4px;
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 2px;
+	position: relative;
+	cursor: pointer;
+}
+
+.csc-bar-progress {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	background: #22c55e;
+	border-radius: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.csc-bar-scrubber {
+	width: 10px;
+	height: 10px;
+	background: #22c55e;
+	border: 2px solid #ffffff;
+	border-radius: 50%;
+	margin-right: -5px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.csc-video-embed-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	z-index: 6;
+	background: #000;
+}
+
+.csc-video-embed-container iframe,
+.csc-video-embed-container video {
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+/* Content Column (Right) */
+.csc-story-content-col {
+	padding: 0px 0px 0px 32px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: transparent;
+}
+
+.csc-story-meta-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 23px;
+}
+
+.csc-story-meta-item {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.csc-meta-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.csc-meta-icon img {
+	width: 17px !important;
+	height: 17px !important;
+	object-fit: contain;
+}
+
+.csc-meta-text {
+	font-size: 15px;
+	line-height: 1.4;
+	color: var(--csc-story-slate);
+}
+
+.csc-meta-label {
+	color: var(--csc-story-slate);
+	margin-right: 4px;
+	font-family: "Nunito";
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.csc-meta-val {
+	color: var(--csc-story-slate);
+	margin-right: 4px;
+	font-family: "Nunito";
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+
+}
+
+.csc-story-excerpt-body {
+	color: var(--csc-story-muted);
+	font-size: 14.5px;
+	line-height: 1.65;
+	margin-bottom: 18px;
+}
+
+.csc-story-excerpt-body p {
+	margin: 0 0 12px;
+	font-family: "Nunito";
+	font-weight: 400;
+	font-size: 16px;
+	color: #868989;
+	line-height: 26px;
+
+}
+
+.csc-story-excerpt-body p:last-child {
+	margin-bottom: 0;
+}
+
+section.csc-story-section-two {
+	background-color: #FAFAFA;
+	padding: 60px 20px;
+}
+
+
+.csc-story-view-more-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 11px 20px;
+	border: 1.5px solid var(--csc-story-navy);
+	border-radius: 5px;
+	background: transparent;
+	color: var(--csc-story-navy);
+	transition: all 0.25s ease;
+	font-family: "Roboto";
+	font-weight: 500;
+	font-size: 16px;
+
+}
+
+.csc-story-view-more-btn:hover {
+	background: var(--csc-story-navy);
+	color: #ffffff;
+}
+
+
+
+/* Pagination Dots */
+.csc-story-pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0px;
+	margin-top: 40px;
+	margin-bottom: 0px;
+}
+
+.csc-story-pagination .swiper-pagination-bullet {
+	width: 10px;
+	height: 10px;
+	background: #D9D9D9;
+	opacity: 1;
+	border-radius: 50%;
+	transition: all 0.25s ease;
+	cursor: pointer;
+}
+
+.csc-story-pagination .swiper-pagination-bullet-active {
+	background: var(--csc-story-navy);
+}
+
+/* ==========================================================================
+   2. Grid Cards Page
+   ========================================================================== */
+.csc-story-grid-wrapper {
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Filter Bar */
+.csc-story-filter-bar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 30px;
+	justify-content: center;
+}
+
+.csc-filter-btn {
+	padding: 8px 18px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #475569;
+	background: #f1f5f9;
+	border: 1px solid transparent;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.csc-filter-btn:hover {
+	background: #e2e8f0;
+	color: #0f172a;
+}
+
+.csc-filter-btn.is-active {
+	background: var(--csc-story-navy);
+	color: #ffffff;
+	box-shadow: 0 4px 12px rgba(0, 45, 98, 0.25);
+}
+
+/* Cards Grid */
+.csc-story-cards-grid {
+	display: grid;
+	gap: 33px;
+}
+
+.csc-grid-cols-3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.csc-grid-cols-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.csc-grid-cols-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.csc-story-grid-card {
+	background: #ffffff;
+	border: 1px solid var(--csc-story-border);
+	border-radius: var(--csc-story-radius);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.csc-story-grid-card:hover {
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+}
+
+.csc-story-grid-card.is-hidden {
+	display: none !important;
+}
+
+/* Card Media */
+.csc-grid-card-media {
+	position: relative;
+	width: 100%;
+	height: 285px;
+	background: #f1f5f9;
+	overflow: hidden;
+}
+
+.csc-grid-card-media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.35s ease;
+}
+
+
+
+
+.csc-grid-card-placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	color: #94a3b8;
+}
+
+/* Card Body */
+.csc-grid-card-body {
+	padding: 25px 22px 35px 22px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.csc-grid-meta-list {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	margin-bottom: 20px;
+}
+
+.csc-grid-meta-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.csc-grid-meta-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 16px;
+	height: auto;
+}
+
+.csc-grid-meta-text {
+	font-size: 14px;
+	line-height: 1.4;
+	color: var(--csc-story-slate);
+}
+
+.csc-grid-meta-label {
+	font-family: "Nunito";
+	color: #040707;
+	font-weight: 700;
+	margin-right: 4px;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.csc-grid-meta-val {
+	font-family: "Nunito";
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	color: #040707;
+}
+
+/* Card Footer */
+.csc-grid-card-footer {
+	margin-top: auto;
+	padding-top: 18px;
+	border-top: 1px solid #EDEDED;
+}
+
+.csc-grid-read-more {
+	color: var(--csc-story-navy);
+	font-family: "Roboto";
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.csc-grid-read-more:hover {
+	color: var(--csc-story-blue);
+	text-decoration: underline;
+}
+
+/* ==========================================================================
+   3. Single Story Page
+   ========================================================================== */
+.csc-single-story-page {
+	width: 100%;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	background: #ffffff;
+	color: var(--csc-story-slate);
+}
+
+
+
+.csc-hero-people-illustration {
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: contain;
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 200" fill="none"><circle cx="70" cy="90" r="18" fill="%23fcd34d"/><path d="M48,150 C48,125 92,125 92,150 Z" fill="%2315803d"/><path d="M40,110 L25,75 M35,115 L18,85" stroke="%23ca8a04" stroke-width="3" stroke-linecap="round"/><circle cx="160" cy="95" r="18" fill="%23fed7aa"/><path d="M138,155 C138,130 182,130 182,155 Z" fill="%23b91c1c"/><rect x="190" y="110" width="35" height="25" rx="3" fill="%23334155"/><circle cx="270" cy="85" r="19" fill="%23fcd34d"/><path d="M246,155 C246,125 294,125 294,155 Z" fill="%230284c7"/><rect x="260" y="105" width="20" height="30" fill="%230369a1"/><circle cx="370" cy="85" r="18" fill="%23fed7aa"/><path d="M346,155 C346,125 394,125 394,155 Z" fill="%23475569"/><circle cx="410" cy="135" r="22" fill="%231e293b"/><circle cx="410" cy="135" r="12" fill="%2394a3b8"/></svg>');
+}
+
+
+/* Main Story Wrapper */
+.csc-story-main-wrap {
+	padding: 60px 20px 60px;
+}
+
+/* Main Story Wrapper */
+.csc-story-main-wrap-inner {
+	max-width: 1400px;
+	margin: 0 auto;
+}
+
+
+/* Featured Story Card */
+.csc-story-featured-card {
+	background: #ffffff;
+	border: 1px solid var(--csc-story-border);
+	border-radius: 0px;
+	overflow: hidden;
+}
+
+.csc-featured-card-grid {
+	display: grid;
+	grid-template-columns: 1.1fr 1.2fr;
+}
+
+.csc-featured-media-col {
+	background: #f8fafc;
+	min-height: 380px;
+	position: relative;
+}
+
+.csc-featured-img-wrap {
+	width: 100%;
+	height: 100%;
+	min-height: 380px;
+}
+
+.csc-featured-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	max-height: 495px;
+}
+
+.csc-featured-info-col {
+	padding: 38px 35px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.csc-story-full-narrative {
+	font-family: "Nunito";
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 26px;
+	color: #868989;
+}
+
+.csc-story-full-narrative p {
+	margin: 0 0 14px;
+}
+
+.csc-story-full-narrative p:last-child {
+	margin-bottom: 0;
+}
+
+/* 4 Structured Information Cards (2x2 Grid) */
+.csc-story-structured-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 35px;
+}
+
+.csc-info-card {
+	background: #ffffff;
+	border: 1px solid #F2F2F2;
+	border-radius: 10px;
+	padding: 26px 20px;
+}
+
+.csc-info-card-title {
+	font-family: "Roboto";
+	color: var(--csc-story-navy);
+	margin: 0 0 15px;
+	font-weight: 600;
+	font-size: 25px;
+	text-transform: capitalize;
+}
+
+.csc-info-card-content {
+	font-size: 14px;
+	line-height: 1.65;
+	color: #64748b;
+}
+
+.csc-info-card-content p {
+	margin: 0 0 10px;
+	font-family: "Nunito";
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 25px;
+	color: #868989;
+
+}
+
+.csc-info-card-content p:last-child {
+	margin-bottom: 0;
+}
+
+/* Glimpses of Our Initiatives */
+.csc-story-glimpses-section {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.csc-glimpses-heading {
+	font-size: 24px;
+	font-weight: 800;
+	color: var(--csc-story-navy);
+	text-transform: uppercase;
+	letter-spacing: 0.8px;
+	margin: 0 0 28px;
+	position: relative;
+	display: inline-block;
+}
+
+.csc-glimpses-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 18px;
+}
+
+.csc-glimpse-item {
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+	background: #f1f5f9;
+}
+
+.csc-glimpse-link {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 190px;
+	overflow: hidden;
+}
+
+.csc-glimpse-link img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.35s ease;
+}
+
+
+
+/* Lightbox Modal for Glimpses */
+.csc-lightbox-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.85);
+	z-index: 99999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.25s ease;
+}
+
+.csc-lightbox-overlay.is-active {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.csc-lightbox-content {
+	max-width: 90vw;
+	max-height: 85vh;
+	position: relative;
+}
+
+.csc-lightbox-content img {
+	max-width: 100%;
+	max-height: 85vh;
+	border-radius: 8px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.csc-lightbox-close {
+	position: absolute;
+	top: -40px;
+	right: 0;
+	background: none;
+	border: none;
+	color: #ffffff;
+	font-size: 32px;
+	cursor: pointer;
+}
+
+/* ==========================================================================
+   4. Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1300px) {
+	.csc-grid-card-media {
+		height: 200px;
+	}
+
+
+
+	.csc-grid-card-body {
+		padding: 20px;
+	}
+
+	.csc-grid-meta-list {
+		gap: 10px;
+	}
+
+	.csc-story-cards-grid {
+		gap: 20px;
+	}
+
+
+}
+
+
+
+
+@media (max-width: 1024px) {
+
+	.csc-story-main-wrap {
+		padding: 30px 20px 30px;
+	}
+
+	.csc-story-structured-grid {
+		gap: 20px;
+	}
+
+	section.csc-story-section-two {
+		padding: 30px 20px;
+	}
+
+
+	.csc-story-play-trigger {
+		top: 30%;
+		left: 40%;
+	}
+
+
+}
+
+
+
+@media (max-width: 992px) {
+
+	.csc-story-card,
+	.csc-featured-card-grid {
+		grid-template-columns: 40% 1fr;
+	}
+
+	.csc-story-video-col,
+	.csc-story-video-box,
+	.csc-featured-media-col,
+	.csc-featured-img-wrap {
+		min-height: 200px;
+	}
+
+	.csc-grid-cols-3 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.csc-glimpses-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.csc-story-hero-graphics {
+		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+
+	.csc-story-content-col,
+	.csc-featured-info-col {
+		padding: 24px 20px;
+	}
+
+	.csc-grid-cols-3,
+	.csc-grid-cols-2 {
+		grid-template-columns: 1fr;
+	}
+
+	.csc-story-structured-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.csc-glimpses-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.csc-story-card,
+	.csc-featured-card-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.csc-story-hero-title {
+		font-size: 30px;
+	}
+
+	.csc-info-card-title {
+		font-size: 22px;
+	}
+
+	.csc-featured-img {
+		max-height: 400px !important;
+	}
+
+	.csc-story-video-col,
+	.csc-story-video-box,
+	.csc-featured-media-col,
+	.csc-featured-img-wrap {
+		min-height: 350px;
+	}
+
+	.player.right-content-area-supported {
+		overflow: hidden;
+		height: calc(100vw) !important;
+	}
+
+	.csc-story-play-trigger {
+		top: 40%;
+		left: 40%;
+	}
+
+
+
+}
+
+@media (max-width: 468px) {
+	.csc-grid-meta-val {
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	.csc-grid-meta-label {
+		font-size: 14px;
+		line-height: 21px;
+	}
+
+	.csc-info-card-title {
+		margin: 0 0 10px;
+		font-size: 20px;
+	}
+
+	.csc-grid-card-footer {
+		padding-top: 10px;
+	}
+
+	.csc-grid-meta-list {
+		margin-bottom: 15px;
+	}
+
+
+	.csc-featured-img {
+		max-height: 300px !important;
+	}
+
+
+	.csc-info-card {
+		background: #ffffff;
+		border: 1px solid #F2F2F2;
+		border-radius: 10px;
+		padding: 20px;
+	}
+
+
+
+}

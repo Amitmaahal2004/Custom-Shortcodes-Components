@@ -1,0 +1,199 @@
+/**
+ * Schemes & Services Grid Layout Styles
+ *
+ * @package CustomShortcodesComponents
+ */
+
+.csc-schemes-grid-wrapper {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.csc-schemes-grid-wrapper * {
+	box-sizing: border-box;
+}
+
+/* Grid Container */
+.csc-schemes-grid {
+	display: grid;
+	gap: 24px;
+	width: 100%;
+	margin: 0;
+	padding: 5px 0 10px 0;
+	list-style: none;
+}
+
+/* Column Variants */
+.csc-schemes-grid.csc-schemes-grid-cols-1 {
+	grid-template-columns: 1fr;
+}
+
+.csc-schemes-grid.csc-schemes-grid-cols-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.csc-schemes-grid.csc-schemes-grid-cols-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.csc-schemes-grid.csc-schemes-grid-cols-4 {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.csc-schemes-grid.csc-schemes-grid-cols-5 {
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.csc-schemes-grid.csc-schemes-grid-cols-6 {
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+/* Grid Item & Equal Height Flex */
+.csc-schemes-grid-item {
+	display: flex;
+	height: 100%;
+}
+
+.csc-schemes-grid-item .csc-scheme-card {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Responsive Grid Breakpoints */
+@media (max-width: 1200px) {
+
+	.csc-schemes-grid.csc-schemes-grid-cols-4,
+	.csc-schemes-grid.csc-schemes-grid-cols-5,
+	.csc-schemes-grid.csc-schemes-grid-cols-6 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 900px) {
+
+	.csc-schemes-grid.csc-schemes-grid-cols-3,
+	.csc-schemes-grid.csc-schemes-grid-cols-4,
+	.csc-schemes-grid.csc-schemes-grid-cols-5,
+	.csc-schemes-grid.csc-schemes-grid-cols-6 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.csc-schemes-grid {
+		gap: 20px;
+	}
+}
+
+@media (max-width: 600px) {
+
+	.csc-schemes-grid.csc-schemes-grid-cols-2,
+	.csc-schemes-grid.csc-schemes-grid-cols-3,
+	.csc-schemes-grid.csc-schemes-grid-cols-4,
+	.csc-schemes-grid.csc-schemes-grid-cols-5,
+	.csc-schemes-grid.csc-schemes-grid-cols-6 {
+		grid-template-columns: 1fr;
+	}
+
+	.csc-schemes-grid {
+		gap: 16px;
+	}
+}
+
+/* ==========================================================================
+   Pagination Styling
+   ========================================================================== */
+.csc-schemes-grid-pagination {
+	margin-top: 36px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.csc-schemes-grid-pagination ul.page-numbers {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	flex-wrap: wrap;
+	border: none;
+}
+
+.csc-schemes-grid-pagination ul.page-numbers li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.csc-schemes-grid-pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 42px;
+	height: 42px;
+	padding: 0 14px;
+	border-radius: 5px;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	color: #334155;
+	font-family: "Roboto", sans-serif;
+	font-size: 15px;
+	font-weight: 500;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.csc-schemes-grid-pagination a.page-numbers:hover {
+	background: #f8fafc;
+	border-color: #cbd5e1;
+	color: #0f172a;
+}
+
+.csc-schemes-grid-pagination .page-numbers.current {
+	background: #01356e;
+	border-color: #01356e;
+	color: #ffffff;
+	font-weight: 600;
+	cursor: default;
+}
+
+.csc-schemes-grid-pagination .page-numbers.dots {
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	color: #94a3b8;
+	min-width: 24px;
+	padding: 0 4px;
+	cursor: default;
+}
+
+.csc-schemes-grid-pagination .page-numbers.prev,
+.csc-schemes-grid-pagination .page-numbers.next {
+	padding: 0 16px;
+	font-weight: 500;
+	gap: 6px;
+}
+
+.csc-schemes-grid-pagination .csc-pagination-arrow {
+	font-size: 18px;
+	line-height: 1;
+	display: none;
+}
+
+@media (max-width: 480px) {
+	.csc-schemes-grid-pagination .page-numbers {
+		min-width: 36px;
+		height: 36px;
+		padding: 0 10px;
+		font-size: 14px;
+	}
+}
